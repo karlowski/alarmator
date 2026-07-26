@@ -16,21 +16,14 @@ void handle_sensor(void* params)
 
         switch (alarmator->state)
         {
-            case 1:
-                if (alarmator->sensor->voltage_mv > SENSOR_THRESHOLD) // TODO: question for a threshold
-                {
-                    alarmator->led->level = 0;
-                } else
-                {
-                    alarmator->led->level = 1;
-                }
-
+            case 1: 
+                alarmator->led->level = alarmator->sensor->voltage_mv > SENSOR_THRESHOLD ? 0 : 1; // TODO: question for a threshold
                 break;
-            case 2:
-                alarmator->led->level = 1;
+            case 2: 
+                alarmator->led->level = 1; 
                 break;
-            default:
-                alarmator->led->level = 0;
+            default: 
+                alarmator->led->level = 0; 
                 break;
         }
 
