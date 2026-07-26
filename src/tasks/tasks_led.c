@@ -13,22 +13,30 @@ void handle_led(void* params)
 
     while (1)
     {
-        if (alarmator->led->level && alarmator->state == 2)
+        switch (alarmator->state)
         {
-            gpio_set_level(alarmator->led->pin, 1);
-            vTaskDelay(pdMS_TO_TICKS(LOOP_FREQ_MS));
-        }
-        else if (alarmator->led->level)
-        {
-            gpio_set_level(alarmator->led->pin, 1);
-            vTaskDelay(pdMS_TO_TICKS(20));
-
-            gpio_set_level(alarmator->led->pin, 0);
-            vTaskDelay(pdMS_TO_TICKS(20));
-        } else
-        {
-            gpio_set_level(alarmator->led->pin, 0);
-            vTaskDelay(pdMS_TO_TICKS(LOOP_FREQ_MS));
+            case 2:
+                gpio_set_level(alarmator->led->pin, 1);
+                vTaskDelay(pdMS_TO_TICKS(LOOP_FREQ_MS));
+                break;
+            case 1:
+                if (alarmator->led->level)
+                {
+                    gpio_set_level(alarmator->led->pin, 1);
+                    vTaskDelay(pdMS_TO_TICKS(20));
+                    gpio_set_level(alarmator->led->pin, 0);
+                    vTaskDelay(pdMS_TO_TICKS(20));
+                }
+                else
+                {
+                    gpio_set_level(alarmator->led->pin, 0);
+                    vTaskDelay(pdMS_TO_TICKS(LOOP_FREQ_MS));
+                }
+                break;
+            default:
+                gpio_set_level(alarmator->led->pin, 0);
+                vTaskDelay(pdMS_TO_TICKS(LOOP_FREQ_MS));
+                break;
         }
     }
 }
