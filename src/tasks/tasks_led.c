@@ -9,6 +9,7 @@
 
 void handle_led(void* params)
 {
+    // TODO: add wrapper and make dynamic retrieval to avoid duplicated type cast
     alarmator_config_t* alarmator = (alarmator_config_t*)params;
 
     while (1)
